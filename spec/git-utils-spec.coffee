@@ -1,5 +1,5 @@
 
-GitLog = require 'git-log-utils'
+GitLog = require 'hg-log-utils'
 fs = require 'fs'
 path = require 'path'
 

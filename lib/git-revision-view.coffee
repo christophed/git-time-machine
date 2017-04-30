@@ -1,7 +1,7 @@
 _ = require 'underscore-plus'
 path = require 'path'
 fs = require 'fs'
-GitLog = require 'git-log-utils'
+GitLog = require 'hg-log-utils'
 
 {CompositeDisposable, BufferedProcess} = require "atom"
 {$} = require "atom-space-pen-views"

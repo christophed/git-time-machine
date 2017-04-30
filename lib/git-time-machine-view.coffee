@@ -4,7 +4,7 @@ _ = require('underscore-plus')
 str = require('bumble-strings')
 moment = require('moment')
 
-GitLog = require 'git-log-utils'
+GitLog = require 'hg-log-utils'
 GitTimeplot = require './git-timeplot'
 GitRevisionView = require './git-revision-view'
 
