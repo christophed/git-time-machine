@@ -1,6 +1,7 @@
 _ = require 'underscore-plus'
 path = require 'path'
 fs = require 'fs'
+GitLog = require 'git-log-utils'
 
 {CompositeDisposable, BufferedProcess} = require "atom"
 {$} = require "atom-space-pen-views"
@@ -47,19 +48,33 @@ class GitRevisionView
 
 
   @_loadRevision: (file, hash, stdout, exit) ->
-    showArgs = [
-      "show",
-      "#{hash}:./#{path.basename(file)}"
-    ]
+    showArgs = cmd = null
+    directory = path.dirname(file)
+
+    if GitLog.isGit(directory)
+      cmd = "git"
+      showArgs = [
+        "show",
+        "#{hash}:./#{path.basename(file)}"
+      ]
+    else if GitLog.isHg(directory)
+      cmd = "hg"
+      showArgs = [
+        "cat",
+        "-r #{hash}",
+        "./#{path.basename(file)}"
+      ]
+    else
+      throw "Not a GIT or MERCURIAL file #{directory}"
+
     # console.log "calling git"
     new BufferedProcess {
-      command: "git",
+      command: cmd,
       args: showArgs,
-      options: { cwd:path.dirname(file) },
+      options: { cwd: directory },
       stdout,
       exit
     }
-
 
   @_getInitialLineNumber: (editor) ->
     editorEle = atom.views.getView editor
@@ -142,7 +157,7 @@ class GitRevisionView
     if not SplitDiff._getConfig 'diffWords' then SplitDiff._setConfig 'diffWords', true
     if not SplitDiff._getConfig 'ignoreWhitespace' then SplitDiff._setConfig 'ignoreWhitespace', true
     if not SplitDiff._getConfig 'scrollSyncType' then SplitDiff._setConfig 'scrollSyncType', 'Vertical + Horizontal'
-    
+
     SplitDiff.editorSubscriptions = new CompositeDisposable()
     SplitDiff.editorSubscriptions.add editors.editor1.onDidStopChanging =>
       SplitDiff.updateDiff(editors) if editors?

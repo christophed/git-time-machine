@@ -17,7 +17,7 @@ class GitTimeMachineView
     if options.editor?
       @setEditor(options.editor)
       @render()
-      
+
     @_bindWindowEvents()
 
 
@@ -51,8 +51,8 @@ class GitTimeMachineView
   destroy: ->
     @_unbindWindowEvents()
     @$element.remove()
-    
-    
+
+
   hide: ->
     @timeplot?.hide()   # so it knows to hide the popup
 
@@ -74,20 +74,17 @@ class GitTimeMachineView
         if str.weaklyHas(e.message, NOT_GIT_ERRORS)
           console.warn "#{file} not in a git repository"
           return null
-      
+
       atom.notifications.addError String e
       console.error e
       return null
 
     return commits;
 
-
-
-
   _bindWindowEvents: () ->
-    $(window).on 'resize', @_onEditorResize 
-    
-    
+    $(window).on 'resize', @_onEditorResize
+
+
   _unbindWindowEvents: () ->
     $(window).off 'resize', @_onEditorResize
 
@@ -133,4 +130,3 @@ class GitTimeMachineView
 
   _onEditorResize: =>
     @render()
-    
