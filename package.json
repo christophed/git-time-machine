@@ -1,7 +1,7 @@
 {
   "name": "hg-time-machine",
   "main": "./lib/git-time-machine",
-  "version": "1.5.9",
+  "version": "1.5.10",
   "description": "Visually interact with git/hg commit history for a file",
   "keywords": [
     "git",
@@ -14,7 +14,7 @@
     "atom"
   ],
   "activationCommands": {
-    "atom-workspace": "git-time-machine:toggle"
+    "atom-workspace": "hg-time-machine:toggle"
   },
   "repository": "https://github.com/christophed/git-time-machine",
   "license": "MIT",
